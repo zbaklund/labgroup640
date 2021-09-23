@@ -49,7 +49,7 @@ public class Iperfer {
             // Client Mode
             if (cmd.hasOption("c")) {
                 // Get time
-                int timeVal = Integer.parseInt(cmd.getOptionValue("t"));
+                long timeVal = Integer.parseInt(cmd.getOptionValue("t"));
                 timeVal *= 1000000000; // Covert to nanoseconds as per spec
 
                 String host = cmd.getOptionValue("h");
