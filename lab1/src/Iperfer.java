@@ -113,7 +113,7 @@ public class Iperfer {
                 serverSocket.close();
                 // Calculate and print stats
                 System.out.println("received=" + numBytesReceived + " KB rate="
-                        + (numBytesReceived / ((end - start) / NANO_SECONDS)) / 1000 + " Mbps");
+                        + ((numBytesReceived / 1000) / ((end - start) / NANO_SECONDS)) / 1000 + " Mbps");
                 System.exit(0); // Exit gracefully
             }
             // Bad args
