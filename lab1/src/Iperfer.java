@@ -102,7 +102,7 @@ public class Iperfer {
                 long start = System.nanoTime();
                 int numBytesReceived = 0;
                 // Receive data until there is no more
-                while(socketReturnBytes != -1) {
+                while(socketReturnBytes > -1) {
                     byte[] buffer = new byte[1000];
                     socketReturnBytes = s.getInputStream().read(buffer);
                     numBytesReceived += socketReturnBytes;
