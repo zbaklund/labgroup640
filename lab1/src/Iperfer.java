@@ -7,7 +7,6 @@ public class Iperfer {
     private static int portNum = -1;
 
     public static void main(String[] args) throws Exception {
-
         // Lazily parse the command line args
         Options options = new Options();
 
@@ -96,7 +95,7 @@ public class Iperfer {
                     serverSocket = new ServerSocket(portNum);
                     s = serverSocket.accept();
                 } catch (Exception e) {
-                    System.out.println("An error occured when trying to create a server socket");
+                    System.out.println("An error occurred when trying to create a server socket");
                     System.exit(1);
                 }
                 // Get start time
@@ -113,7 +112,7 @@ public class Iperfer {
                 serverSocket.close();
                 // Calculate and print stats
                 System.out.println("received=" + numBytesReceived + " KB rate="
-                        + numBytesReceived / ((start - end) / 1000000000) + " Mbps");
+                        + numBytesReceived / ((end - start) / 1000000000) + " Mbps");
                 System.exit(0); // Exit gracefully
             }
             // Bad args
