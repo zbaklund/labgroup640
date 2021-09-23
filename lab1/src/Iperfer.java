@@ -49,8 +49,8 @@ public class Iperfer {
             // Client Mode
             if (cmd.hasOption("c")) {
                 // Get time
-                long timeVal = Integer.parseInt(cmd.getOptionValue("t"));
-                timeVal *= 1000000000; // Covert to nanoseconds as per spec
+                double timeVal = Integer.parseInt(cmd.getOptionValue("t"));
+                timeVal *= 1000000000;
 
                 String host = cmd.getOptionValue("h");
                 Socket c = null;
@@ -81,7 +81,7 @@ public class Iperfer {
                 outStream.close();
 
                 // Print statistics
-                System.out.println("sent=" + numArraysSent + " KB rate=" + numArraysSent / timeVal + " Mbps");
+                System.out.println("sent=" + numArraysSent + " KB rate=" + numArraysSent / (timeVal / 1000000000) + " Mbps");
             }
 
             // Server mode
