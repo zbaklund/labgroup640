@@ -5,6 +5,7 @@ import org.apache.commons.cli.*; // Apache command line parsing library
 // Implements Iperfer command line utility
 public class Iperfer {
     private static int portNum = -1;
+    private static final int NANO_SECONDS = 1000000000;
 
     public static void main(String[] args) throws Exception {
         // Lazily parse the command line args
@@ -50,7 +51,7 @@ public class Iperfer {
             if (cmd.hasOption("c")) {
                 // Get time
                 double timeVal = Integer.parseInt(cmd.getOptionValue("t"));
-                timeVal *= 1000000000;
+                timeVal *= NANO_SECONDS;
 
                 String host = cmd.getOptionValue("h");
                 Socket c = null;
@@ -68,20 +69,20 @@ public class Iperfer {
                 int numArraysSent = 0;
 
                 // Send byte streams
-                while (System.nanoTime() - start < timeVal) {
+                while (System.nanoTime() - start < timeVal ) {
                     try {
                         outStream.write(new byte[1000]); // Keep trying to write a null byte array
-                        numArraysSent++;
                     } catch (Exception e) {
                         System.out.println("Failed to send byte array");
                         System.exit(1);
                     }
+                    numArraysSent++;
                 }
                 c.close();
                 outStream.close();
 
                 // Print statistics
-                System.out.println("sent=" + numArraysSent + " KB rate=" + numArraysSent / (timeVal / 1000000000) + " Mbps");
+                System.out.println("sent=" + numArraysSent + "KB rate=" + (numArraysSent / (timeVal / NANO_SECONDS)) / 1000 + " Mbps");
             }
 
             // Server mode
@@ -112,7 +113,7 @@ public class Iperfer {
                 serverSocket.close();
                 // Calculate and print stats
                 System.out.println("received=" + numBytesReceived + " KB rate="
-                        + numBytesReceived / ((end - start) / 1000000000) + " Mbps");
+                        + numBytesReceived / ((end - start) / NANO_SECONDS) + " Mbps");
                 System.exit(0); // Exit gracefully
             }
             // Bad args
