@@ -71,7 +71,7 @@ public class Iperfer {
                 byte dataToSend[] = new byte[1000];
 
                 // Send byte streams
-                while (System.nanoTime() - start < timeVal ) {
+                while (System.currentTimeMillis() - start < timeVal ) {
                     try {
                         outStream.write(dataToSend); // Keep trying to write a null byte array
                     } catch (Exception e) {
