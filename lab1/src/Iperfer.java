@@ -5,7 +5,7 @@ import org.apache.commons.cli.*; // Apache command line parsing library
 // Implements Iperfer command line utility
 public class Iperfer {
     private static int portNum = -1;
-    private static final int NANO_SECONDS = 1000000000;
+    private static final int NANO_SECONDS = 1000;
 
     public static void main(String[] args) throws Exception {
         // Lazily parse the command line args
@@ -65,13 +65,15 @@ public class Iperfer {
                     System.out.println("Error: invalid arguments");
                     System.exit(1);
                 }
-                long start = System.nanoTime();
+                long start = System.currentTimeMillis();
                 int numArraysSent = 0;
+
+                byte dataToSend[] = new byte[1000];
 
                 // Send byte streams
                 while (System.nanoTime() - start < timeVal ) {
                     try {
-                        outStream.write(new byte[1000]); // Keep trying to write a null byte array
+                        outStream.write(dataToSend); // Keep trying to write a null byte array
                     } catch (Exception e) {
                         System.out.println("Failed to send byte array");
                         System.exit(1);
@@ -100,20 +102,22 @@ public class Iperfer {
                     System.exit(1);
                 }
                 // Get start time
-                long start = System.nanoTime();
+                long start = System.currentTimeMillis();
                 int numBytesReceived = 0;
                 // Receive data until there is no more
+                byte[] buffer = new byte[1000];
                 while(socketReturnBytes > -1) {
-                    byte[] buffer = new byte[1000];
                     socketReturnBytes = s.getInputStream().read(buffer);
                     numBytesReceived += socketReturnBytes;
                 }
-                long end = System.nanoTime();
+                long end = System.currentTimeMillis();
                 s.close();
                 serverSocket.close();
+
+                double timeReceiving = end - start;
                 // Calculate and print stats
-                System.out.println("received=" + numBytesReceived + " KB rate="
-                        + ((numBytesReceived / 1000) / ((end - start) / NANO_SECONDS)) / 1000 + " Mbps");
+                System.out.println("received=" + numBytesReceived / 1000 + "KB rate="
+                        + ((numBytesReceived / 1000) / ((timeReceiving) / NANO_SECONDS)) / 1000 + " Mbps");
                 System.exit(0); // Exit gracefully
             }
             // Bad args
