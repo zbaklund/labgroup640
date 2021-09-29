@@ -84,7 +84,7 @@ public class Iperfer {
                 outStream.close();
 
                 // Print statistics
-                System.out.println("sent=" + numArraysSent + "KB rate=" + (numArraysSent / (timeVal / MILLISECONDS)) / 1000 + " Mbps");
+                System.out.println("sent=" + numArraysSent + "KB rate=" + String.format("%.3f", (numArraysSent / (timeVal / MILLISECONDS)) / 1000) + " Mbps");
             }
 
             // Server mode
@@ -117,7 +117,7 @@ public class Iperfer {
                 double timeReceiving = end - start;
                 // Calculate and print stats
                 System.out.println("received=" + numBytesReceived / 1000 + "KB rate="
-                        + ((numBytesReceived / 1000) / ((timeReceiving) / MILLISECONDS)) / 1000 + " Mbps");
+                        + String.format("%.3f", ((numBytesReceived / 1000) / ((timeReceiving) / MILLISECONDS)) / 1000) + " Mbps");
                 System.exit(0); // Exit gracefully
             }
             // Bad args
