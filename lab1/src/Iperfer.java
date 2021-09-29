@@ -5,7 +5,7 @@ import org.apache.commons.cli.*; // Apache command line parsing library
 // Implements Iperfer command line utility
 public class Iperfer {
     private static int portNum = -1;
-    private static final int NANO_SECONDS = 1000;
+    private static final int MILLISECONDS = 1000;
 
     public static void main(String[] args) throws Exception {
         // Lazily parse the command line args
@@ -51,7 +51,7 @@ public class Iperfer {
             if (cmd.hasOption("c")) {
                 // Get time
                 double timeVal = Integer.parseInt(cmd.getOptionValue("t"));
-                timeVal *= NANO_SECONDS;
+                timeVal *= MILLISECONDS;
 
                 String host = cmd.getOptionValue("h");
                 Socket c = null;
@@ -84,7 +84,7 @@ public class Iperfer {
                 outStream.close();
 
                 // Print statistics
-                System.out.println("sent=" + numArraysSent + "KB rate=" + (numArraysSent / (timeVal / NANO_SECONDS)) / 1000 + " Mbps");
+                System.out.println("sent=" + numArraysSent + "KB rate=" + (numArraysSent / (timeVal / MILLISECONDS)) / 1000 + " Mbps");
             }
 
             // Server mode
@@ -117,7 +117,7 @@ public class Iperfer {
                 double timeReceiving = end - start;
                 // Calculate and print stats
                 System.out.println("received=" + numBytesReceived / 1000 + "KB rate="
-                        + ((numBytesReceived / 1000) / ((timeReceiving) / NANO_SECONDS)) / 1000 + " Mbps");
+                        + ((numBytesReceived / 1000) / ((timeReceiving) / MILLISECONDS)) / 1000 + " Mbps");
                 System.exit(0); // Exit gracefully
             }
             // Bad args
